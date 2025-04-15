@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.example.wildguard",
+      "sha256_cert_fingerprints": [
+        "AC:B6:ED:79:90:CC:3B:E4:17:C3:F5:2B:8D:BC:D3:89:C3:A0:FF:C3:D9:09:3A:2D:6F:D5:3D:A1:BE:12:E8:26"
+      ]
+    }
+  }
+]

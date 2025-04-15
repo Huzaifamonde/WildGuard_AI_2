@@ -1,0 +1,33 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "wildguardproject",
+          "appId": "1:489513304456:android:62906224817294c375fa3d",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "wildguardproject",
+          "configurations": {
+            "android": "1:489513304456:android:62906224817294c375fa3d",
+            "ios": "1:489513304456:ios:e756934be685824575fa3d",
+            "macos": "1:489513304456:ios:e756934be685824575fa3d",
+            "web": "1:489513304456:web:49a47aff2d26fc6075fa3d",
+            "windows": "1:489513304456:web:42d32cc54b07047c75fa3d"
+          }
+        }
+      }
+    }
+  },
+  "hosting": {
+    "public": "y",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

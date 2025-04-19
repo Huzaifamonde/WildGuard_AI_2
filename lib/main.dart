@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:wildguard/splash_screen.dart';
-import 'package:wildguard/home_screen.dart';
-import 'package:wildguard/login_screen.dart';
 import 'package:app_links/app_links.dart';
 import 'firebase_options.dart';
-import 'globals.dart'; // import it
+import 'globals.dart'; // 🧠 Contains globalAnimalName and isFromDeepLink
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -30,10 +29,10 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
 
-    // Cold start (e.g., app opened from SMS link when closed)
+    // ✅ Cold start — when app opened via deep link
     _appLinks.getInitialLink().then(_handleDeepLink);
 
-    // Warm start (app already running)
+    // ✅ Warm start — already running app
     _appLinks.uriLinkStream.listen(_handleDeepLink);
   }
 
@@ -41,11 +40,12 @@ class _MyAppState extends State<MyApp> {
     if (uri != null && uri.path == "/animal") {
       final animalName = uri.queryParameters["name"] ?? "Unknown";
       globalAnimalName = animalName;
+      isFromDeepLink = true;
 
       debugPrint("🐾 Deep link detected: animal = $animalName");
-      // Do not navigate to HomeScreen here — wait for login screen to handle it!
     }
   }
+
 
   @override
   Widget build(BuildContext context) {

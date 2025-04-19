@@ -4,7 +4,7 @@ import 'home_screen.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'no_animal_detection.dart';
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
@@ -49,7 +49,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         // Registration successful, navigate to HomeScreen
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => HomeScreen(animalName: "Unknown")),
+          MaterialPageRoute(builder: (context) => NoAnimalDetection()),
         );
       } on FirebaseAuthException catch (e) {
         String message = 'An error occurred. Please try again.';

@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'register_screen.dart';
 import 'home_screen.dart';
 import 'globals.dart';
-
+import 'no_animal_detection.dart';
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -29,14 +29,25 @@ class _LoginScreenState extends State<LoginScreen> {
           password: _passwordController.text.trim(),
         );
 
-        final nameToShow = globalAnimalName ?? "Unknown";
+        if (isFromDeepLink && globalAnimalName != null) {
+          // 🐾 Came via SMS link
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => HomeScreen(animalName: globalAnimalName!),
+            ),
+          );
+        } else {
+          // 👣 Normal login
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const NoAnimalDetection(),
 
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => HomeScreen(animalName: nameToShow),
-          ),
-        );
+
+            ),
+          );
+        }
       } on FirebaseAuthException catch (e) {
         String message = 'Login failed. Please try again.';
         if (e.code == 'user-not-found' || e.code == 'invalid-credential') {
@@ -60,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
         children: [
           Positioned(
             top: -30,
-            right: -60,
+            right: -65,
             child: Container(
               width: 360,
               height: 360,

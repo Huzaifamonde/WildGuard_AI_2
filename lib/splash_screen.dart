@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'home_screen.dart';
 import 'login_screen.dart';
+import 'globals.dart';
+import 'no_animal_detection.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -20,14 +22,28 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _checkLoginStatus() async {
     await Future.delayed(const Duration(seconds: 3));
     final user = FirebaseAuth.instance.currentUser;
+
     if (user != null) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const HomeScreen(animalName: "Unknown"),
-        ),
-      );
+      if (isFromDeepLink && globalAnimalName != null) {
+        // 🐾 From SMS deep link — go to Home with animal name
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomeScreen(animalName: globalAnimalName!),
+          ),
+        );
+      } else {
+        // 🧘‍♂️ Normal login, no animal detected
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const NoAnimalDetection(),
+
+          ),
+        );
+      }
     } else {
+      // 🔐 Not logged in — go to login screen
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const LoginScreen()),
@@ -41,14 +57,11 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: const Color(0xFFF0F4F4),
       body: Stack(
         children: [
-          // Background
           Container(
             width: double.infinity,
             height: double.infinity,
-            color: const Color(0xFFEEF6F6), // Calm background green-blue
+            color: const Color(0xFFEEF6F6),
           ),
-
-          // Decorative Tiger Circle
           Positioned(
             top: -30,
             right: -60,
@@ -79,11 +92,9 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ),
           ),
-
-          // App Title
           Positioned(
             top: 420,
-            left: MediaQuery.of(context).size.width / 2 - 130,
+            left: MediaQuery.of(context).size.width / 2 - 120,
             child: Text(
               'WildGuard AI',
               style: TextStyle(
@@ -101,8 +112,6 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ),
           ),
-
-          // Tagline
           Positioned(
             top: 470,
             left: MediaQuery.of(context).size.width / 2 - 170,

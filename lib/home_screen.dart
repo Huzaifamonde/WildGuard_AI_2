@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:lottie/lottie.dart';
 import 'login_screen.dart';
-
+import 'wildlife_info.dart';
 class HomeScreen extends StatelessWidget {
   final String animalName;
 
@@ -45,6 +45,24 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             ListTile(
+              leading: const Icon(Icons.info_outline, color: Color(0xFF006D77)),
+              title: const Text(
+                'Wildlife Info',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Color(0xFF006D77),
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              onTap: () {
+                // Navigate to the Wildlife Info Screen
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const WildlifeInfoScreen()),
+                );
+              },
+            ),
+            ListTile(
               leading: const Icon(Icons.logout, color: Color(0xFF006D77)),
               title: const Text(
                 'Logout',
@@ -70,17 +88,17 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
-              child:Image.asset(
-                'assets/gifs/gifgreen.gif',
-                width: 200,
+              child:Lottie.asset(
+                'assets/animations/${animalName.toLowerCase()}.json',
                 height: 180,
-                fit: BoxFit.contain,
+                repeat: true,
               )
+
             ),
             const SizedBox(height: 15),
             Center(
               child: Text(
-                displayName,
+                '${displayName.toUpperCase()}',
                 style: const TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,

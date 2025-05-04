@@ -15,7 +15,7 @@ class WildlifeInfoScreen extends StatelessWidget {
           children: [
             const DrawerHeader(
               decoration: BoxDecoration(
-                color: Color(0xFF006D77),
+                  color: Color(0xFF006D77),
               ),
               child: Center(
                 child: Text(

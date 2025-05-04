@@ -3,10 +3,43 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:lottie/lottie.dart';
 import 'login_screen.dart';
 import 'wildlife_info.dart';
-class HomeScreen extends StatelessWidget {
+import 'globals.dart';
+
+class HomeScreen extends StatefulWidget {
   final String animalName;
 
   const HomeScreen({super.key, required this.animalName});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
+  late String currentAnimal;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    currentAnimal = widget.animalName;
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      if (globalAnimalName != null && globalAnimalName != currentAnimal) {
+        setState(() {
+          currentAnimal = globalAnimalName!;
+        });
+      }
+    }
+  }
 
   void _logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
@@ -19,19 +52,16 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final displayName = animalName.isNotEmpty ? animalName : "Wild Animal";
+    final displayName = currentAnimal.isNotEmpty ? currentAnimal : "Wild Animal";
 
     return Scaffold(
-     // backgroundColor: const Color(0xFFEEF6F6),
       backgroundColor: const Color(0xFFF0F4F4),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
             const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Color(0xFF006D77),
-              ),
+              decoration: BoxDecoration(color: Color(0xFF006D77)),
               child: Center(
                 child: Text(
                   'WildGuard Menu',
@@ -55,7 +85,6 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                // Navigate to the Wildlife Info Screen
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const WildlifeInfoScreen()),
@@ -88,17 +117,16 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
-              child:Lottie.asset(
-                'assets/animations/${animalName.toLowerCase()}.json',
+              child: Lottie.asset(
+                'assets/animations/${currentAnimal.toLowerCase()}.json',
                 height: 180,
                 repeat: true,
-              )
-
+              ),
             ),
             const SizedBox(height: 15),
             Center(
               child: Text(
-                '${displayName.toUpperCase()}',
+                currentAnimal.toUpperCase(),
                 style: const TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
@@ -106,15 +134,6 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 16),
-            // Center(
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: [
-            //       _buildInfoColumn("00 KM", "Distance"),
-            //     ],
-            //   ),
-            // ),
             const SizedBox(height: 20),
             Container(
               padding: const EdgeInsets.all(16),
@@ -152,33 +171,9 @@ class HomeScreen extends StatelessWidget {
                 _buildSafetyTip("If threatened, back away slowly."),
               ],
             ),
-
           ],
         ),
       ),
-    );
-  }
-
-  static Widget _buildInfoColumn(String value, String label) {
-    return Column(
-      children: [
-        Text(
-          value,
-          style: const TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF006D77),
-          ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 16,
-            color: Color(0xFF4A4A4A),
-          ),
-        ),
-      ],
     );
   }
 

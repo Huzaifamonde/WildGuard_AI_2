@@ -1,15 +1,40 @@
-# wildguard
+# wildguard - Wild Animal Detection and Alert System
 
-A new Flutter project.
+WildGuard is a smart surveillance system designed to prevent human-animal conflict, especially in forest-border areas or rural zones. It uses a real-time object detection model to identify wild animals through a connected camera and sends instant alert SMS to registered users via Twilio. Additionally, it triggers a buzzer sound to warn people nearby.
 
-## Getting Started
+### 🎯 Objective
+- To develop a real-time alert system that:
 
-This project is a starting point for a Flutter application.
+- Detects the presence of wild animals (like elephants, bears, etc.)
 
-A few resources to get you started if this is your first Flutter project:
+- Sends SMS alerts to registered users
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Provides safety tips through a mobile application
+
+- Triggers a buzzer for local sound-based alerts
+
+### 🔧 Tech Stack
+- Object Detection Model: YOLOv8
+
+- Hardware: Raspberry Pi 4, USB Webcam, Active Buzzer Module
+
+- Backend: Python
+
+- SMS Integration: Twilio API
+
+- Database: Firebase Firestore
+
+- Mobile App: Firebase Dynamic Links to open the Android app
+
+- Libraries: OpenCV, ultralytics, RPi.GPIO, Twilio, Firebase Admin SDK
+
+⚙️ System Architecture
+Camera → YOLOv8 on Raspberry Pi → 
+[SMS Alerts via Twilio]
+[Buzzer Alert]
+[Data Logging to Firebase]
+→ Mobile App opens via dynamic link
+
 
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,

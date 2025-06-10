@@ -29,11 +29,8 @@ WildGuard is a smart surveillance system designed to prevent human-animal confli
 - Libraries: OpenCV, ultralytics, RPi.GPIO, Twilio, Firebase Admin SDK
 
 ⚙️ System Architecture
-Camera → YOLOv8 on Raspberry Pi → 
-[SMS Alerts via Twilio]
-[Buzzer Alert]
-[Data Logging to Firebase]
-→ Mobile App opens via dynamic link
+![System Architecture](Picture1.png)
+
 
 
 For help getting started with Flutter development, view the
